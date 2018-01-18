@@ -44,6 +44,7 @@ const evalNode = (node) =>{
 
 	else if (node.shape == "Function"){
 		if (node.args.length != 2){
+			alert("Wrong number of arguments entered for function!");
 			return;
 		}
 		if(node.callee.name == "+"){
@@ -63,7 +64,8 @@ const evalNode = (node) =>{
 	}
 
 	else{
-
+		alert("This node does not have a valid shape specified");
+		return;
 	}
 
 }
@@ -87,8 +89,6 @@ export const run = (ast, interestIds) => {
 	for (let i = 0; i < nodesToDo.length; ++i){
 		output[nodesToDo[i].id] = evalNode(nodesToDo[i]);
 	}
-
-	console.debug(output);
-
+	
 	return output;
 };
