@@ -25,7 +25,7 @@ describe('Dsl', () => {
 			]),
 			// dsl block id: 20
 			dsl.fn(dsl.id('+'), [
-				dsl.id('x') + dsl.id('x'),
+				dsl.id('x'), dsl.id('x'),
 			]),
 		]);
 
