@@ -34,7 +34,7 @@ General notes on Javascript syntax are located in [`./docs/syntax.md`](docs/synt
 ### Execution rules
 A `block` is a unique node in that it defines a `scope`.
 + Every node in a `block`'s `nodes` property falls inside that block's scope.
-+ Every binding in a `block`'s `bindings` property is available 
++ Every binding in a `block`'s `bindings` property is available
 
 A `scope` is a way of the language to contain assignment definitions and bindings.
 `scopes` have a parent-child relationship, where child scopes inherit from and shadow bindings from parent scopes.
@@ -77,11 +77,11 @@ const ast = dsl.block({
   '+': (a, b) => a + b,
   '-': (a, b) => a - b,
 }, [
-  // x = 10 + 10, id: 0
+  // x = 2 + 2, id: 0
   dsl.assign('x', dsl.fn(dsl.id('+'), [
     dsl.lit(2), dsl.lit(2)
   ])),
-  // y = x * x, id: 1
+  // y = x - 5, id: 1
   dsl.assign('y', dsl.fn(dsl.id('-'), [
     dsl.id('x'), dsl.lit(5)
   ])),
@@ -98,16 +98,16 @@ const ast = dsl.block({
   ]),
 ]);
 
-// Execute x = 10 + 10 and the last block node (...):
+// Execute the anonymous block and the last node:
 const results = run(ast, [2, 3]);
 
-// Of note: the y = x * x line should never be run in this execution
+// Of note: the y = x - 5 line should never be run in this execution
 const expected = {
   '2': 50, // block's x assignment shadows the parent
   '3': 8, // this node is inside the parent block, and does not see the inner x
 };
 ```
- 
+
 ## Project setup
 
 ### General notes
@@ -131,7 +131,7 @@ If you don't have a favorite editor I suggest webstorm setup as follows
 
 Install the project dependencies
 ```
-npm install 
+npm install
 ```
 
 Lint the code and run the tests on the commandline

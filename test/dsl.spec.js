@@ -8,35 +8,35 @@ describe('Dsl', () => {
 			'+': (a, b) => a + b,
 			'-': (a, b) => a - b,
 		}, [
-			// x = 10 + 10, id: 0
+			// x = 2 + 2, id: 4
 			dsl.assign('x', dsl.fn(dsl.id('+'), [
 				dsl.lit(2), dsl.lit(2),
 			])),
-			// y = x * x, id: 1
+			// y = x * x, id: 9
 			dsl.assign('y', dsl.fn(dsl.id('-'), [
 				dsl.id('x'), dsl.lit(5),
 			])),
-			// dsl block id: 2
+			// dsl block id: 16
 			dsl.block({}, [
 				dsl.assign('x', dsl.lit(25)),
 				dsl.fn(dsl.id('+'), [
 					dsl.id('x'), dsl.id('x'),
 				]),
 			]),
-			// dsl block id: 3
+			// dsl block id: 20
 			dsl.fn(dsl.id('+'), [
 				dsl.id('x') + dsl.id('x'),
 			]),
 		]);
 
-		// Execute x = 10 + 10 and the last node:
+		// Execute the anonymous block and the last node:
 		const results = run(ast, [
-			ast.nodes[0].id,
+			ast.nodes[2].id,
 			ast.nodes[3].id,
 		]);
 
 		const expected = {
-			[ast.nodes[0].id]: 50,
+			[ast.nodes[2].id]: 50,
 			[ast.nodes[3].id]: 8,
 		};
 
