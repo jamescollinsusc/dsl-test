@@ -7,7 +7,9 @@
     "test": "./node_modules/mocha/bin/mocha --compilers js:babel-register test/**/*.spec.js",
     "test-web": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js \"mocha!../test/allTests.js\" --target web --output-file test.bundle.js"
   },
-  "dependencies": {},
+  "dependencies": {
+    "eslint-plugin-react": "^4.3.0"
+  },
   "devDependencies": {
     "autoprefixer": "^6.3.3",
     "babel-core": "^6.7.2",
