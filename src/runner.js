@@ -7,6 +7,17 @@
  */
 
 const scopeStack = [new Object()]; 
+const Identifiers = [new Object()];
+let scopeCount = 0; 
+
+
+const evalArray = (args) =>{
+	let output = [];
+	for (let i = 0; i < args.length; ++i){
+		output.push(evalNode(args[i]))
+	}
+	return output;
+}
 
 const evalNode = (node) =>{
 	if(node.shape == "Array"){
@@ -58,12 +69,8 @@ const evalNode = (node) =>{
 			alert("Wrong number of arguments entered for function!");
 			return;
 		}
-		//Handle addition and subtraction functions
-		if(node.callee.name == "+"){
-			return(evalNode(node.args[0]) + evalNode(node.args[1]));
-		}
-		else if(node.callee.name == "-"){
-			return(evalNode(node.args[0]) - evalNode(node.args[1]));
+		else{
+			return scopeStack[0][node.callee.name].apply(null, evalArray(node.args));
 		}
 	}
 
@@ -84,12 +91,17 @@ const evalNode = (node) =>{
 }
 
 
-
 export const run = (ast, interestIds) => {
 	console.debug('@todo: optimize and execute', { ast, interestIds });
 	
 	let nodesToDo = new Object();
 	let output = new Object();
+
+	for (let a in ast.bindings){
+		if(ast.bindings.hasOwnProperty(a)){
+			scopeStack[0][a] = ast.bindings[a];
+		}
+	}
 
 	//Need to evaluate all nodes in same scope as interest nodes in case of prerequisite assignments
 	for (let i = 0; i < ast.nodes.length; ++i){
@@ -105,5 +117,6 @@ export const run = (ast, interestIds) => {
 		}
 	}
 	
+	console.log(output);
 	return output;
 };
