@@ -1,8 +1,18 @@
 # dsl-test
 
+
 A major part of the Datavore application is the ability to represent a data manipulation and analytics process in a way that can be manipulated and reasoned about in different contexts. This is a toy example, exploring ideas in client side execution of an example representation.
 
 Your mission, if you choose to accept it, is to solve the example problem. The notes below outline the problem structure, expected results, and how to test your solution.
+
+
+## Solution Explanation
+
+I thought it might be a good idea to talk about my solution here in the readme instead of going into it over email. In this iteration of my solution I added functionality to allow for any function with any number of arguments to be executed in a function block, made it so that I wasn't executing every block in the dsl, and made it so that nodes that aren't children of the root can be specified in interest IDs. I used a stack of maps to keep track of identifiers across scopes. This was useful for inheriting from parent scopes but deleting updated values when backing out of a scope. In this iteration, instead of evaluating assignment blocks before hand and then storing the resulting value in the identifier map, I instead stored a reference to the latest assignment node for that identifier, and only executed that value node once a node we were interested in requested a value from that specific identifier. This made it so that I could track all assignment nodes within the given scope of an interested node, but not actually execute any until I absolutely needed it. The downside to this is that I'm storing references to identifiers that may not be needed by our interested nodes, but I believe that it would be more efficient than searching for the assignment node of a specific identifier within a scope every time that identifier is requested. I tested this program on other nodes than what the test cases specified just to be sure, and had successful results on all the nodes I tested which were nodes with ID's 9, 34, and 43. Thank you for your patience and I hope this is an acceptable solution!
+
+Sincerely,
+James
+
 
 
 ## Project goals and spec
